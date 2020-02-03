@@ -9,11 +9,11 @@ namespace TaskManager
 {
     public class Task
     {
-        public int id;
-        public string title;
-        public string description;
-        public DateTime date;
-        public Boolean complete;
+        public int id { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public DateTime date { get; set; }
+        public Boolean complete { get; set; }
 
         public void Print()
         {
@@ -25,7 +25,7 @@ namespace TaskManager
     public class TaskBase
     {
         private string Path = "TestDB.db";
-        public List<Task> tasks;
+        public List<Task> tasks { get; set; }
         public TaskBase()
         {
             tasks = new List<Task>();
@@ -179,7 +179,9 @@ namespace TaskManager
         public void DeleteAllCompleted()
         {
             var temp = tasks.Where(item => item.complete == true).Select(item => item).ToList();
-            foreach (var i in temp) if (i.complete == true) Delete(i);
+            List<Task> tempList = new List<Task>();
+            foreach (var i in temp) if (i.complete == true) tempList.Add(i);
+            foreach (var i in tempList) Delete(i);
             Console.WriteLine("\tВсе завершённые задания удалены.\n");
         }
         public void DeleteAllOld()
